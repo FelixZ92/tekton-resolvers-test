@@ -1,0 +1,61 @@
+apiVersion: tekton.ba.de/v1beta1
+kind: Workflow
+spec:
+  pipelines:
+    - name: build-backend
+      workspaces:
+        - name: repo
+          workspace: backend
+      spec:
+        pipelineRef:
+          resolver: git
+          params:
+            - name: url
+              value: https://github.com/FelixZ92/tekton-resolvers-test.git
+            - name: pathInRepo
+              value: hello-pipeline.yaml
+    - name: build-frontend
+      workspaces:
+        - name: repo
+          workspace: frontend
+      spec:
+        pipelineSpec:
+          tasks:
+            - name: hello-from-subpipeline
+              workspaces:
+                - name: repo
+                  workspace: repo
+              taskSpec:
+                workspaces:
+                  - name: repo
+                steps:
+                  - name: echo
+                    image: alpine
+                    script: |
+                      #!/usr/bin/env sh
+                      echo "subpipeline-1" >> $(workspaces.repo.path)/whoami
+                      echo "Hello World!"
+            - name: bye-from-subpipeline
+              workspaces:
+                - name: repo
+                  workspace: repo
+              taskSpec:
+                workspaces:
+                  - name: repo
+                steps:
+                  - name: echo
+                    image: alpine
+                    script: |
+                      #!/usr/bin/env sh
+                      echo "Bye $(cat $(workspaces.repo.path)/whoami) !"
+    - name: deploy
+      runAfter:
+        - build-backend
+        - build-frontend
+      ref:
+        resolver: git
+        params:
+          - name: url
+            value: https://github.com/FelixZ92/tekton-resolvers-test.git
+          - name: pathInRepo
+            value: hello-sub-pipeline.yaml
