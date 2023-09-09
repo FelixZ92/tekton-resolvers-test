@@ -1,5 +1,5 @@
 kind: SubPipeline
-apiVersion: tekton.ba.dev/v1beta1
+apiVersion: tekton.ba.de/v1beta1
 metadata:
   name: hello-sub-pipeline
 spec:
