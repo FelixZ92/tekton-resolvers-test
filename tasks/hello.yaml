@@ -3,9 +3,12 @@ kind: Task
 metadata:
   name: hello
 spec:
+  params:
+    - name: username
+      type: string
   steps:
     - name: echo
       image: alpine
       script: |
         #!/bin/sh
-        echo "Hello World"
+        echo "Hello $(params.username)!"
