@@ -1,0 +1,45 @@
+---
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: good-morning-good-afternoon
+spec:
+  tasks:
+    - name: hello
+      params:
+        - name: username
+          value: liza
+      taskRef:
+        resolver: git
+        params:
+          - name: url
+            value: https://github.com/FelixZ92/pac-demo.git
+          - name: pathInRepo
+            value: tasks/hello.yaml
+    - name: echo-good-morning
+      taskSpec:
+        steps:
+          - name: echo
+            image: ubuntu
+            script: |
+              #!/usr/bin/env bash
+              echo "Good Morning!"
+    - name: echo-good-afternoon
+      taskSpec:
+        steps:
+          - name: echo
+            image: ubuntu
+            script: |
+              #!/usr/bin/env bash
+              echo "Good Afternoon!"
+    - name: goodbye
+      params:
+        - name: username
+          value: liza
+      taskRef:
+        resolver: git
+        params:
+          - name: url
+            value: https://github.com/FelixZ92/pac-demo.git
+          - name: pathInRepo
+            value: tasks/goodbye.yaml
