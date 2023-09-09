@@ -4,11 +4,15 @@ kind: Pipeline
 metadata:
   name: good-morning-good-afternoon
 spec:
+  params:
+    - name: username
+      type: string
+      default: liza
   tasks:
     - name: hello
       params:
         - name: username
-          value: liza
+          value: $(params.username)
       taskRef:
         resolver: git
         params:
@@ -35,7 +39,7 @@ spec:
     - name: goodbye
       params:
         - name: username
-          value: liza
+          value: $(params.username)
       taskRef:
         resolver: git
         params:
