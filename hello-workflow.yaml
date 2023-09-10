@@ -19,6 +19,9 @@ spec:
         - name: repo
           workspace: frontend
       spec:
+        params:
+          - name: workflowrun
+            value: $(context.workflowRun.name)
         pipelineSpec:
           tasks:
             - name: hello-from-subpipeline
