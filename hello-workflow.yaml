@@ -73,6 +73,9 @@ spec:
       runAfter:
         - build-backend
         - build-frontend
+      params:
+        - name: workflow
+          value: $(context.workflowRun.name)
       ref:
         resolver: git
         params:
