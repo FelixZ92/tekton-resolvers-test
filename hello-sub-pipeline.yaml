@@ -17,12 +17,16 @@ spec:
           - name: workflowrun
             value: $(params.workflowrun)
         taskSpec:
+          params:
+            - name: workflowrun
+              default: ''
+              type: string
           steps:
             - name: echo
               image: alpine
               script: |
                 #!/usr/bin/env sh
-                echo "Hello World!"
+                echo "Hello World from wr $(params.workflowrun)!"
       - name: bye-from-subpipeline
         taskSpec:
           steps:
