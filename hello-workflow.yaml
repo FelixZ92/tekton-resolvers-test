@@ -8,6 +8,8 @@ spec:
       value: $(params.hello)
     - name: workflow
       value: $(context.workflowRun.name)
+    - name: workflowName
+      value: $(context.workflow.name)
   pipelines:
     - name: build-backend
       params:
