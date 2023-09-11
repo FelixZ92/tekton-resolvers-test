@@ -5,14 +5,14 @@ spec:
     - name: from-custom-run
       value: $(params.hello)
     - name: workflow
-      value: $$(context.workflowRun.name)
+      value: $(context.workflowRun.name)
   pipelines:
     - name: build-backend
       params:
         - name: from-workflow
           value: $(params.from-custom-run)
         - name: workflow
-          value: $$(context.workflowRun.name)
+          value: $(context.workflowRun.name)
       workspaces:
         - name: repo
           workspace: backend
@@ -31,7 +31,7 @@ spec:
       spec:
         params:
           - name: workflow
-            value: $$(context.workflowRun.name)
+            value: $(context.workflowRun.name)
           - name: from-workflow
             value: $(params.from-custom-run)
           - name: workflowrun
