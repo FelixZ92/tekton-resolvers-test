@@ -1,5 +1,7 @@
 apiVersion: tekton.ba.de/v1beta1
 kind: Workflow
+metadata:
+  name: test-workflow
 spec:
   params:
     - name: from-custom-run
