@@ -3,9 +3,19 @@ apiVersion: tekton.ba.de/v1beta1
 metadata:
   name: hello-sub-pipeline
 spec:
+  params:
+    - name: workflow
+      value: $(context.workflowRun.name)
   pipelineSpec:
+    params:
+      - name: workflowrun
+        type: string
+        default: ""
     tasks:
       - name: hello-from-subpipeline
+        params:
+          - name: workflowrun
+            value: $(params.workflowrun)
         taskSpec:
           steps:
             - name: echo
