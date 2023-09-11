@@ -6,6 +6,9 @@ spec:
       value: $(params.hello)
   pipelines:
     - name: build-backend
+      params:
+        - name: from-workflow
+          value: $(params.from-custom-run)
       workspaces:
         - name: repo
           workspace: backend
